@@ -1,5 +1,5 @@
-mlflow
-tensorflow
+mlflow==1.27.0
+tensorflow==2.9.1
 pandas
 numpy
 uuid
