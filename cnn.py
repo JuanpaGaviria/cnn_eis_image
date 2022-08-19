@@ -1,5 +1,6 @@
 import tensorflow as tf
-
+from azure.storage.blob import BlobClient
+import pathlib
 print("Tensorflow version " + tf.__version__)
 print("Num GPUs Available: ", len(tf.config.list_physical_devices("GPU")))
 
@@ -17,6 +18,24 @@ from tensorflow.keras import layers
 
 import os
 from os import path
+
+def upload_datastorage(file, directory, container, cs):
+        try:
+            idx_file=0
+            file_name=pathlib.Path(file).name
+            blob=BlobClient.from_connection_string(
+                conn_str=cs,
+                container_name=container,
+                blob_name=f"{directory}/{file_name}"
+            )
+        except Exception:
+            raise
+
+        try:
+            with open(file, "rb") as data:
+                blob.upload_blob(data, overwrite=True)
+        except Exception:
+            raise
 
 here = os.path.dirname(os.path.realpath(__file__))
 
@@ -209,3 +228,5 @@ eis_data["pred"] = pred.argmax(axis=1)
 eis_data.head()
 
 eis_data.to_csv("results.csv")
+
+upload_datastorage("results.csv", "dataset", "azureml-blobstore-708f8d2d-951d-4d9c-80ee-4b86ef222a41", "DefaultEndpointsProtocol=https;AccountName=cnneisws4924259555;AccountKey=VtELEzJVTkVsT7lp1ATu1SYdXj95ZmBPSzNzNbTpqLAuyyBE61AWZVR+7Yqt8Sf8htAgr/0BQcPf+AStnaaFiQ==;EndpointSuffix=core.windows.net")
