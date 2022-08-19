@@ -229,4 +229,4 @@ eis_data.head()
 
 eis_data.to_csv("results.csv")
 
-upload_datastorage("results.csv", "dataset", "azureml-blobstore-708f8d2d-951d-4d9c-80ee-4b86ef222a41", "DefaultEndpointsProtocol=https;AccountName=cnneisws4924259555;AccountKey=VtELEzJVTkVsT7lp1ATu1SYdXj95ZmBPSzNzNbTpqLAuyyBE61AWZVR+7Yqt8Sf8htAgr/0BQcPf+AStnaaFiQ==;EndpointSuffix=core.windows.net")
+upload_datastorage("results.csv", "dataset", "", "")
